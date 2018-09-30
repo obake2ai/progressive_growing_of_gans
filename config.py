@@ -19,8 +19,8 @@ class EasyDict(dict):
 # Paths.
 
 data_dir = 'datasets'
-#result_dir = 'results'
-result_dir = "/content/gdrive/'My Drive'/colab_results"
+result_dir = 'results'
+#result_dir = "/content/gdrive/'My Drive'/colab_results"
 
 #----------------------------------------------------------------------------
 # TensorFlow options.
