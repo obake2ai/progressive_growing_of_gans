@@ -19,7 +19,8 @@ class EasyDict(dict):
 # Paths.
 
 data_dir = 'datasets'
-result_dir = 'results'
+#result_dir = 'results'
+result_dir = "/content/gdrive/'My Drive'/clab_results"
 
 #----------------------------------------------------------------------------
 # TensorFlow options.
@@ -50,9 +51,10 @@ sched       = EasyDict()                                    # Options for train.
 grid        = EasyDict(size='1080p', layout='random')       # Options for train.setup_snapshot_image_grid().
 
 # Dataset (choose one).
-desc += '-celebahq';            dataset = EasyDict(tfrecord_dir='celebahq'); train.mirror_augment = True
+#desc += '-celebahq';            dataset = EasyDict(tfrecord_dir='celebahq'); train.mirror_augment = True
 #desc += '-celeba';              dataset = EasyDict(tfrecord_dir='celeba'); train.mirror_augment = True
 #desc += '-cifar10';             dataset = EasyDict(tfrecord_dir='cifar10')
+desc += '-ai_syunga';             dataset = EasyDict(tfrecord_dir='ai_syunga')
 #desc += '-cifar100';            dataset = EasyDict(tfrecord_dir='cifar100')
 #desc += '-svhn';                dataset = EasyDict(tfrecord_dir='svhn')
 #desc += '-mnist';               dataset = EasyDict(tfrecord_dir='mnist')
