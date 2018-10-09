@@ -45,8 +45,8 @@ class TFRecordExporter:
         assert(os.path.isdir(self.tfrecord_dir))
 
     def close(self):
-        # if self.print_progress:
-        #     print('%-40s\r' % 'Flushing data...', end='', flush=True)
+        if self.print_progress:
+            print('%-40s\r' % 'Flushing data...', end='', flush=True)
         for tfr_writer in self.tfr_writers:
             tfr_writer.close()
         self.tfr_writers = []
