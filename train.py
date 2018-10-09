@@ -90,7 +90,7 @@ class TrainingSchedule:
         lod_initial_resolution  = 4,        # Image resolution used at the beginning.
         lod_training_kimg       = 600,      # Thousands of real images to show before doubling the resolution.
         lod_transition_kimg     = 600,      # Thousands of real images to show when fading in new layers.
-        minibatch_base          = 16,       # Maximum minibatch size, divided evenly among GPUs.
+        minibatch_base          = 4,       # Maximum minibatch size, divided evenly among GPUs.
         minibatch_dict          = {},       # Resolution-specific overrides.
         max_minibatch_per_gpu   = {},       # Resolution-specific maximum minibatch size per GPU.
         G_lrate_base            = 0.001,    # Learning rate for the generator.
@@ -139,7 +139,7 @@ def train_progressive_gan(
     mirror_augment          = False,        # Enable mirror augment?
     drange_net              = [-1,1],       # Dynamic range used when feeding image data to the networks.
     image_snapshot_ticks    = 1,            # How often to export image snapshots?
-    network_snapshot_ticks  = 10,           # How often to export network snapshots?
+    network_snapshot_ticks  = 5,           # How often to export network snapshots?
     save_tf_graph           = False,        # Include full TensorFlow computation graph in the tfevents file?
     save_weight_histograms  = False,        # Include weight histograms in the tfevents file?
     resume_run_id           = None,         # Run ID or network pkl to resume training from, None = start from scratch.
