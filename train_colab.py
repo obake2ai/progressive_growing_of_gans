@@ -277,7 +277,7 @@ def train_progressive_gan(
                 file_name = 'fakes-' + str(cur_nimg // 1000).zfill(6) + '.png'
                 with open(file_name, mode='rb') as f:
                     save2drive(file_name)
-                with open(os.path.join(result_subdir, 'log.txt') mode='rb') as f:
+                with open(os.path.join(result_subdir, 'log.txt'), mode='rb') as f:
                     save2drive(os.path.join(result_subdir, 'log.txt'))
             if cur_tick % network_snapshot_ticks == 0 or done:
                 file_name = 'network-snapshot-' + str(cur_nimg // 1000).zfill(6) + '.pkl'
