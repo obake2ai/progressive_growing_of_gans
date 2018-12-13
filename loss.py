@@ -9,6 +9,7 @@ import numpy as np
 import tensorflow as tf
 
 import tfutil
+from ops import *
 
 #----------------------------------------------------------------------------
 # Convenience func that casts all of its arguments to tf.float32.
@@ -37,6 +38,13 @@ def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
         loss += label_penalty_fakes * cond_weight
     return loss
 
+def G_can(G, D, opt, training_set, minibatch_size,
+    cond_weight = 1.0): # Weight of the conditioning term.
+    G_sum = image_summary("G", G)
+
+    g_loss_class_fake = tf.reduce_mean(
+        tf.nn.softmax_cross_entropy_with_logits(logits=model.D_c_logits_,
+        labels=(1.0/model.y_dim)*tf.ones_like(model.D_c_)))
 #----------------------------------------------------------------------------
 # Discriminator loss function used in the paper (WGAN-GP + AC-GAN).
 
