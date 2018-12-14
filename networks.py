@@ -289,12 +289,9 @@ def D_paper(
     if structure == 'linear':
         img = images_in
         x = fromrgb(img, resolution_log2)
-        i = 0
         for res in range(resolution_log2, 2, -1):
-            print (i)
-            i += 1
             lod = resolution_log2 - res
-            print (lod)
+            print (resolution_log2, res, lod)
             x = block(x, res)
             img = downscale2d(img)
             y = fromrgb(img, res - 1)
