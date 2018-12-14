@@ -284,7 +284,6 @@ def D_paper(
                     x = apply_bias(dense(x, fmaps=1+label_size, gain=1, use_wscale=use_wscale))
             return x
 
-    print (structure)
     # Linear structure: simple but inefficient.
     if structure == 'linear':
         img = images_in
@@ -311,8 +310,6 @@ def D_paper(
     assert combo_out.dtype == tf.as_dtype(dtype)
     scores_out = tf.identity(combo_out[:, :1], name='scores_out')
     labels_out = tf.identity(combo_out[:, 1:], name='labels_out')
-    print (scores_out)
-    print (labels_out)
     return scores_out, labels_out
 
 #----------------------------------------------------------------------------
