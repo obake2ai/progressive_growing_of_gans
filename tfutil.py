@@ -276,7 +276,6 @@ class Optimizer:
     # Intended to be called once per GPU.
     def register_gradients(self, loss, vars):
         assert not self._updates_applied
-        print (loss.eval())
         # Validate arguments.
         if isinstance(vars, dict):
             vars = list(vars.values()) # allow passing in Network.trainables as vars
