@@ -79,7 +79,7 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
             label_penalty_fakes = tfutil.autosummary('Loss/label_penalty_fakes', label_penalty_fakes)
         loss += (label_penalty_reals + label_penalty_fakes) * cond_weight
 
-    print ('loss',loss)
+    print (loss.eval())
     return loss
 
 #----------------------------------------------------------------------------
