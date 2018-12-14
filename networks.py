@@ -243,7 +243,7 @@ def D_paper(
     mbstd_group_size    = 4,            # Group size for the minibatch standard deviation layer, 0 = disable.
     dtype               = 'float32',    # Data type to use for activations and outputs.
     fused_scale         = True,         # True = use fused conv2d + downscale2d, False = separate downscale2d layers.
-    structure           = 'linear',         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
+    structure           = None,         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
     is_template_graph   = False,        # True = template graph constructed by the Network class, False = actual evaluation.
     **kwargs):                          # Ignore unrecognized keyword args.
 
