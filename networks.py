@@ -297,7 +297,7 @@ def D_paper(
             x = block(x, res)
             img = downscale2d(img)
             y = fromrgb(img, res - 1)
-            print (type(y))
+            print (tf.shape(y))
             with tf.variable_scope('Grow_lod%d' % lod):
                 x = lerp_clip(x, y, lod_in - lod)
         combo_out = block(x, 2)
