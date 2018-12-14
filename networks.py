@@ -293,8 +293,8 @@ def D_paper(
         for res in range(resolution_log2, 2, -1):
             print (i)
             i += 1
-            print (lod)
             lod = resolution_log2 - res
+            print (lod)
             x = block(x, res)
             img = downscale2d(img)
             y = fromrgb(img, res - 1)
