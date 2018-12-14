@@ -293,16 +293,14 @@ def D_paper(
         for res in range(resolution_log2, 2, -1):
             print (i)
             i += 1
+            print (lod)
             lod = resolution_log2 - res
             x = block(x, res)
             img = downscale2d(img)
             y = fromrgb(img, res - 1)
-            print ('x',tf.shape(x))
-            print ('y',tf.shape(y))
             with tf.variable_scope('Grow_lod%d' % lod):
                 x = lerp_clip(x, y, lod_in - lod)
         combo_out = block(x, 2)
-        print (tf.shape(combo_out))
 
     # Recursive structure: complex but efficient.
     if structure == 'recursive':
