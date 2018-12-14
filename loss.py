@@ -38,8 +38,7 @@ def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
         loss += label_penalty_fakes * cond_weight
     return loss
 
-def G_can_loss(G, D, D_c, opt, training_set, minibatch_size,
-    cond_weight = 1.0, lamb): # Weight of the conditioning term.
+def G_can_loss(G, D, D_c, opt, training_set, minibatch_size, cond_weight = 1.0, lamb): # Weight of the conditioning term.
 
     latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
     labels = training_set.get_random_labels_tf(minibatch_size)
@@ -50,7 +49,7 @@ def G_can_loss(G, D, D_c, opt, training_set, minibatch_size,
     loss_class_fake = tf.reduce_mean(
       tf.nn.softmax_cross_entropy_with_logits(logits=model.D_c_logits_,
         labels=(1.0/model.y_dim)*tf.ones_like(model.D_c_)))
-    
+
     loss += loss_class_fake
 
     if D.output_shapes[1][1] > 0:
