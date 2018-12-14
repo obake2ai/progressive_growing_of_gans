@@ -297,7 +297,6 @@ def D_paper(
             with tf.variable_scope('Grow_lod%d' % lod):
                 x = lerp_clip(x, y, lod_in - lod)
         combo_out = block(x, 2)
-        print (combo_out)
 
     # Recursive structure: complex but efficient.
     if structure == 'recursive':
@@ -312,6 +311,8 @@ def D_paper(
     assert combo_out.dtype == tf.as_dtype(dtype)
     scores_out = tf.identity(combo_out[:, :1], name='scores_out')
     labels_out = tf.identity(combo_out[:, 1:], name='labels_out')
+    print (scores_out)
+    print (labels_out)
     return scores_out, labels_out
 
 #----------------------------------------------------------------------------
