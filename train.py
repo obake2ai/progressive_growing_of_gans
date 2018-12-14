@@ -214,6 +214,7 @@ def train_progressive_gan(
     train_start_time = tick_start_time - resume_time
     prev_lod = -1.0
     while cur_nimg < total_kimg * 1000:
+        print (cur_tick)
 
         # Choose training parameters and configure training ops.
         sched = TrainingSchedule(cur_nimg, training_set, **config.sched)
