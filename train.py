@@ -14,6 +14,7 @@ import config
 import tfutil
 import dataset
 import misc
+import loss
 
 #----------------------------------------------------------------------------
 # Choose the size and contents of the image snapshot grids that are exported
@@ -227,7 +228,8 @@ def train_progressive_gan(
         for repeat in range(minibatch_repeats):
             for _ in range(D_repeats):
                 tfutil.run([D_train_op, Gs_update_op], {lod_in: sched.lod, lrate_in: sched.D_lrate, minibatch_in: sched.minibatch})
-                print (D_loss.eval())
+                D_loss_open = loss.D_wgangp_acgan(G=G_gpu, D=D_gpu, opt=G_opt, training_set=training_set, minibatch_size=minibatch_split, reals=reals_gpu, labels=labels_gpu)
+                print (D_loss_open)
                 cur_nimg += sched.minibatch
             tfutil.run([G_train_op], {lod_in: sched.lod, lrate_in: sched.G_lrate, minibatch_in: sched.minibatch})
 
