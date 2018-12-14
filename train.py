@@ -184,7 +184,6 @@ def train_progressive_gan(
             labels_gpu = labels_split[gpu]
             with tf.name_scope('G_loss'), tf.control_dependencies(lod_assign_ops):
                 G_loss = tfutil.call_func_by_name(G=G_gpu, D=D_gpu, opt=G_opt, training_set=training_set, minibatch_size=minibatch_split, **config.G_loss)
-                print (G_loss)
             with tf.name_scope('D_loss'), tf.control_dependencies(lod_assign_ops):
                 D_loss = tfutil.call_func_by_name(G=G_gpu, D=D_gpu, opt=D_opt, training_set=training_set, minibatch_size=minibatch_split, reals=reals_gpu, labels=labels_gpu, **config.D_loss)
             G_opt.register_gradients(tf.reduce_mean(G_loss), G_gpu.trainables)
@@ -215,6 +214,7 @@ def train_progressive_gan(
     train_start_time = tick_start_time - resume_time
     prev_lod = -1.0
     while cur_nimg < total_kimg * 1000:
+        print (D_loss.eval())
 
         # Choose training parameters and configure training ops.
         sched = TrainingSchedule(cur_nimg, training_set, **config.sched)
