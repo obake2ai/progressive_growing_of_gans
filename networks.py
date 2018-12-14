@@ -161,7 +161,7 @@ def G_paper(
     structure           = None,         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically.
     is_template_graph   = False,        # True = template graph constructed by the Network class, False = actual evaluation.
     **kwargs):                          # Ignore unrecognized keyword args.
-    
+
     resolution_log2 = int(np.log2(resolution))
     assert resolution == 2**resolution_log2 and resolution >= 4
     def nf(stage): return min(int(fmap_base / (2.0 ** (stage * fmap_decay))), fmap_max)
@@ -169,7 +169,7 @@ def G_paper(
     if latent_size is None: latent_size = nf(0)
     if structure is None: structure = 'linear' if is_template_graph else 'recursive'
     act = leaky_relu if use_leakyrelu else tf.nn.relu
-    
+
     latents_in.set_shape([None, latent_size])
     labels_in.set_shape([None, label_size])
     combo_in = tf.cast(tf.concat([latents_in, labels_in], axis=1), dtype)
@@ -223,7 +223,7 @@ def G_paper(
             if lod > 0: img = cset(img, (lod_in < lod), lambda: grow(y, res + 1, lod - 1))
             return img()
         images_out = grow(combo_in, 2, resolution_log2 - 2)
-        
+
     assert images_out.dtype == tf.as_dtype(dtype)
     images_out = tf.identity(images_out, name='images_out')
     return images_out
@@ -246,7 +246,7 @@ def D_paper(
     structure           = None,         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
     is_template_graph   = False,        # True = template graph constructed by the Network class, False = actual evaluation.
     **kwargs):                          # Ignore unrecognized keyword args.
-    
+
     resolution_log2 = int(np.log2(resolution))
     assert resolution == 2**resolution_log2 and resolution >= 4
     def nf(stage): return min(int(fmap_base / (2.0 ** (stage * fmap_decay))), fmap_max)
@@ -283,7 +283,8 @@ def D_paper(
                 with tf.variable_scope('Dense1'):
                     x = apply_bias(dense(x, fmaps=1+label_size, gain=1, use_wscale=use_wscale))
             return x
-    
+
+    print (structure)
     # Linear structure: simple but inefficient.
     if structure == 'linear':
         img = images_in
