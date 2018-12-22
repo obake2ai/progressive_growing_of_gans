@@ -38,6 +38,16 @@ def dense(x, fmaps, gain=np.sqrt(2), use_wscale=False):
     w = tf.cast(w, x.dtype)
     return tf.matmul(x, w)
 
+# From CAN Code
+def linear(input_, output_size, scope=None, stddev=0.02, bias_start=0.0):
+  shape = input_.get_shape().as_list()
+  with tf.variable_scope(scope or "Linear"):
+    matrix = tf.get_variable("Matrix", [shape[1], output_size], tf.float32,
+                 tf.random_normal_initializer(stddev=stddev))
+    bias = tf.get_variable("bias", [output_size],
+      initializer=tf.constant_initializer(bias_start))
+    return tf.matmul(input_, matrix) + bias
+
 #----------------------------------------------------------------------------
 # Convolutional layer.
 
@@ -300,9 +310,9 @@ def D_paper(
         combo_out = block(x, 2)
 
         #fully connected layers to classify the image into the different styles.
-        h6 = leaky_relu(dense(h5, 1024, 'd_h6_lin'))
-        h7 = leaky_relu(dense(h6, 512, 'd_h7_lin'))
-        c_out = dense(h7, class_num, 'd_co_lin')
+        h6 = leaky_relu(linear(h5, 1024, 'd_h6_lin'))
+        h7 = leaky_relu(linear(h6, 512, 'd_h7_lin'))
+        c_out = linear(h7, class_num, 'd_co_lin')
         c_softmax = tf.nn.softmax(c_out)
 
     # Recursive structure: complex but efficient.
