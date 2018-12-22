@@ -245,6 +245,7 @@ def D_paper(
     fused_scale         = True,         # True = use fused conv2d + downscale2d, False = separate downscale2d layers.
     structure           = None,         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
     is_template_graph   = False,        # True = template graph constructed by the Network class, False = actual evaluation.
+    class_num           = 2             # For CAN classification.
     **kwargs):                          # Ignore unrecognized keyword args.
 
     resolution_log2 = int(np.log2(resolution))
@@ -295,7 +296,14 @@ def D_paper(
             y = fromrgb(img, res - 1)
             with tf.variable_scope('Grow_lod%d' % lod):
                 x = lerp_clip(x, y, lod_in - lod)
+        h5 = x
         combo_out = block(x, 2)
+
+        #fully connected layers to classify the image into the different styles.
+        h6 = lrelu(linear(h5, 1024, 'd_h6_lin'))
+        h7 = lrelu(linear(h6, 512, 'd_h7_lin'))
+        c_out = linear(h7, class_num, 'd_co_lin')
+        c_softmax = tf.nn.softmax(c_out)
 
     # Recursive structure: complex but efficient.
     if structure == 'recursive':
@@ -310,6 +318,6 @@ def D_paper(
     assert combo_out.dtype == tf.as_dtype(dtype)
     scores_out = tf.identity(combo_out[:, :1], name='scores_out')
     labels_out = tf.identity(combo_out[:, 1:], name='labels_out')
-    return scores_out, labels_out
+    return scores_out, labels_out, c_softmax, c_out
 
 #----------------------------------------------------------------------------
