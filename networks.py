@@ -7,7 +7,6 @@
 
 import numpy as np
 import tensorflow as tf
-from ops import *
 
 # NOTE: Do not import any application-specific modules here!
 
@@ -301,9 +300,9 @@ def D_paper(
         combo_out = block(x, 2)
 
         #fully connected layers to classify the image into the different styles.
-        h6 = lrelu(linear(h5, 1024, 'd_h6_lin'))
-        h7 = lrelu(linear(h6, 512, 'd_h7_lin'))
-        c_out = linear(h7, class_num, 'd_co_lin')
+        h6 = leaky_relu(dense(h5, 1024, 'd_h6_lin'))
+        h7 = leaky_relu(dense(h6, 512, 'd_h7_lin'))
+        c_out = dense(h7, class_num, 'd_co_lin')
         c_softmax = tf.nn.softmax(c_out)
 
     # Recursive structure: complex but efficient.
