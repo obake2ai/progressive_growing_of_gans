@@ -300,6 +300,7 @@ def D_paper(
         img = images_in
         x = fromrgb(img, resolution_log2)
         for res in range(resolution_log2, 2, -1):
+            print (x.shape())
             lod = resolution_log2 - res
             x = block(x, res)
             img = downscale2d(img)
