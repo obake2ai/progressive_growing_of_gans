@@ -245,7 +245,7 @@ def D_paper(
     fused_scale         = True,         # True = use fused conv2d + downscale2d, False = separate downscale2d layers.
     structure           = None,         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
     is_template_graph   = False,        # True = template graph constructed by the Network class, False = actual evaluation.
-    class_num           = 2             # For CAN classification.
+    class_num           = 2,            # For CAN classification.
     **kwargs):                          # Ignore unrecognized keyword args.
 
     resolution_log2 = int(np.log2(resolution))
