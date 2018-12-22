@@ -69,7 +69,7 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
 
     with tf.name_scope('EpsilonPenalty'):
         epsilon_penalty = tfutil.autosummary('Loss/epsilon_penalty', tf.square(real_scores_out))
-    loss += epsilon_penalty * wgan_epsilon
+    loss += epsilon_penalty * wgan_epsilon *0
 
     if D.output_shapes[1][1] > 0:
         with tf.name_scope('LabelPenalty'):
