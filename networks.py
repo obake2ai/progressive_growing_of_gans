@@ -253,7 +253,7 @@ def D_paper(
     mbstd_group_size    = 4,            # Group size for the minibatch standard deviation layer, 0 = disable.
     dtype               = 'float32',    # Data type to use for activations and outputs.
     fused_scale         = True,         # True = use fused conv2d + downscale2d, False = separate downscale2d layers.
-    structure           = None,         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
+    structure           = 'linear',         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
     is_template_graph   = False,        # True = template graph constructed by the Network class, False = actual evaluation.
     class_num           = 2,            # For CAN classification.
     **kwargs):                          # Ignore unrecognized keyword args.
@@ -300,16 +300,16 @@ def D_paper(
         img = images_in
         x = fromrgb(img, resolution_log2)
         for res in range(resolution_log2, 2, -1):
-            print (x.shape)
             lod = resolution_log2 - res
             x = block(x, res)
             img = downscale2d(img)
             y = fromrgb(img, res - 1)
             with tf.variable_scope('Grow_lod%d' % lod):
                 x = lerp_clip(x, y, lod_in - lod)
+            h4 = x
         combo_out = block(x, 2)
-        print (combo_out.shape)
-        h5 = combo_out
+        shape = np.product(h4.get_shape()[1:].as_list())
+        h5 = tf.reshape(h4, [-1, shape])
 
         #fully connected layers to classify the image into the different styles.
         h6 = leaky_relu(linear(h5, 1024, 'd_h6_lin'))
