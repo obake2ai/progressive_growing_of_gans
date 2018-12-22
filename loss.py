@@ -49,8 +49,8 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
 
     latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
     fake_images_out = G.get_output_for(latents, labels, is_training=True)
-    real_scores_out, real_labels_out = fp32(D.get_output_for(reals, is_training=True))
-    fake_scores_out, fake_labels_out = fp32(D.get_output_for(fake_images_out, is_training=True))
+    real_scores_out, real_labels_out, real_class_out, real_class_logits = fp32(D.get_output_for(reals, is_training=True))
+    fake_scores_out, fake_labels_out, fake_class_out, fake_class_logits = fp32(D.get_output_for(fake_images_out, is_training=True))
     real_scores_out = tfutil.autosummary('Loss/real_scores', real_scores_out)
     fake_scores_out = tfutil.autosummary('Loss/fake_scores', fake_scores_out)
     loss = fake_scores_out - real_scores_out
