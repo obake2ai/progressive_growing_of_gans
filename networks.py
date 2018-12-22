@@ -330,6 +330,11 @@ def D_paper(
     assert combo_out.dtype == tf.as_dtype(dtype)
     scores_out = tf.identity(combo_out[:, :1], name='scores_out')
     labels_out = tf.identity(combo_out[:, 1:], name='labels_out')
+    print (scores_out.shape)
+    print (labels_out.shape)
+    print (c_softmax.shape)
+    print (c_out.shape)
+    print ('\n')
     return scores_out, labels_out, c_softmax, c_out
 
 #----------------------------------------------------------------------------
