@@ -307,8 +307,9 @@ def D_paper(
             y = fromrgb(img, res - 1)
             with tf.variable_scope('Grow_lod%d' % lod):
                 x = lerp_clip(x, y, lod_in - lod)
-        h5 = x
         combo_out = block(x, 2)
+        print (combo_out.shape)
+        h5 = combo_out
 
         #fully connected layers to classify the image into the different styles.
         h6 = leaky_relu(linear(h5, 1024, 'd_h6_lin'))
