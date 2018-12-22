@@ -163,7 +163,7 @@ def train_progressive_gan(
             D = tfutil.Network('D', num_channels=training_set.shape[0], resolution=training_set.shape[1], label_size=training_set.label_size, **config.D)
             Gs = G.clone('Gs')
         Gs_update_op = Gs.setup_as_moving_average_of(G, beta=G_smoothing)
-    G.print_layers(); D.print_layers()
+    #G.print_layers(); D.print_layers()
 
     print('Building TensorFlow graph...')
     with tf.name_scope('Inputs'):
