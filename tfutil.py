@@ -275,7 +275,7 @@ class Optimizer:
     # Register the gradients of the given loss function with respect to the given variables.
     # Intended to be called once per GPU.
     def register_gradients(self, loss, vars):
-        print ('this is loss',loss)
+        print ('this is loss',loss.eval())
         assert not self._updates_applied
         # Validate arguments.
         if isinstance(vars, dict):
