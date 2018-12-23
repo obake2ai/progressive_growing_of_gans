@@ -660,7 +660,7 @@ def create_from_images_and_labels(tfrecord_dir, image_dir, label_dir, shuffle):
             tfr.add_image(img)
             reordered_names.append(os.path.basename(image_filename))
         reordered_labels = []
-        for key in reordered_names
+        for key in reordered_names:
             reordered_labels += [labels[key]]
         reordered_labels = np.stack(reordered_labels, 0)
         tfr.add_labels(reordered_labels)
