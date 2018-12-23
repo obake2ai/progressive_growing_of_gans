@@ -331,7 +331,7 @@ def D_paper(
         print ('~~')
         def grow_c(res, lod):
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
-            if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
+            if lod > 0: x = cset(x, (lod_in < lod), lambda: grow_c(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
             if res > 3: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
             print ('c', res, y().shape)
