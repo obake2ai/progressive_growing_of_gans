@@ -41,7 +41,6 @@ def dense(x, fmaps, gain=np.sqrt(2), use_wscale=False):
 # From CAN Code
 def linear(input_, output_size, scope=None, stddev=0.02, bias_start=0.0):
   shape = input_.get_shape().as_list()
-  print ('shape',shape)
   with tf.variable_scope(scope or "Linear"):
     matrix = tf.get_variable("Matrix", [shape[1], output_size], tf.float32,
                  tf.random_normal_initializer(stddev=stddev))
@@ -330,20 +329,14 @@ def D_paper(
 
         def grow_c(res, lod):
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
-            print (res, lod)
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow_c(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
-            print ('in',res, lod)
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
-            print ('return')
             return y()
-        print ('get h4')
         h4 = grow_c(3, resolution_log2 - 3)
 
-        print (h4.shape)
         shape = np.product(h4.get_shape()[1:].as_list())
         h5 = tf.reshape(h4, [-1, shape])
-        print (h5.shape)
 
         #fully connected layers to classify the image into the different styles.
         h6 = leaky_relu(linear(h5, 1024, 'd_h6_lin'))
