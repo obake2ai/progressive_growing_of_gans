@@ -334,8 +334,8 @@ def D_paper(
             x = block(x(), res); y = lambda: x
             print ('in',res, lod)
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
-            if res == 3: print('sann!!')
-            return y()
+            if res == 3:
+                return y()
         h4 = grow_c(2, resolution_log2 - 2)
 
         print (h4.shape)
