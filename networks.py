@@ -328,7 +328,7 @@ def D_paper(
             print ('n', res, y().shape)
             return y()
         combo_out = grow(2, resolution_log2 - 2)
-
+        print ('~~')
         def grow_c(res, lod):
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
