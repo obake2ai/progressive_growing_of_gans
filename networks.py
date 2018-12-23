@@ -320,17 +320,13 @@ def D_paper(
     # Recursive structure: complex but efficient.
     if structure == 'recursive':
         def grow(res, lod):
-            print (res)
-            print ('in!')
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
+            y_c = lambda: x
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
-            if res > 3:
-                y_c = y()
-                print ('nyu!',res)
-            print ('by!')
-            return y(), y_c
+            if res > 3: y_c = cset(y_c, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
+            return y(), y_c()
         combo_out, h4 = grow(2, resolution_log2 - 2)
 
         print (h4.shape)
