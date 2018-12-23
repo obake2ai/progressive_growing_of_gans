@@ -324,7 +324,6 @@ def D_paper(
             print (res)
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
             print (res)
-            print (x.shape)
             x = block(x(), res); y = lambda: x
             print (res)
             print (x.shape)
