@@ -174,6 +174,7 @@ def train_progressive_gan(
         reals, labels   = training_set.get_minibatch_tf()
         reals_split     = tf.split(reals, config.num_gpus)
         labels_split    = tf.split(labels, config.num_gpus)
+        print (labels_split)
     G_opt = tfutil.Optimizer(name='TrainG', learning_rate=lrate_in, **config.G_opt)
     D_opt = tfutil.Optimizer(name='TrainD', learning_rate=lrate_in, **config.D_opt)
     for gpu in range(config.num_gpus):
@@ -227,7 +228,6 @@ def train_progressive_gan(
         # Run training ops.
         for repeat in range(minibatch_repeats):
             for _ in range(D_repeats):
-                print (sched.minibatch)
                 #D_loss_val = tfutil.run(D_loss, {lod_in: sched.lod, lrate_in: sched.D_lrate, minibatch_in: sched.minibatch})
                 #print (D_loss_val.shape)
                 tfutil.run([D_train_op, Gs_update_op], {lod_in: sched.lod, lrate_in: sched.D_lrate, minibatch_in: sched.minibatch})
