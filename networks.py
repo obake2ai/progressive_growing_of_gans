@@ -333,8 +333,9 @@ def D_paper(
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
             if res > 3: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
+            print (y().shape)
             return y()
-        h4 = grow_c(3, resolution_log2 - 2)
+        h4 = grow_c(2, resolution_log2 - 2)
 
         print (h4.shape)
         shape = np.product(h4.get_shape()[1:].as_list())
