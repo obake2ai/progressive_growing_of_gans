@@ -339,6 +339,7 @@ def D_paper(
         print (h4.shape)
         shape = np.product(h4.get_shape()[1:].as_list())
         h5 = tf.reshape(h4, [-1, shape])
+        print (h5.shape)
 
         #fully connected layers to classify the image into the different styles.
         h6 = leaky_relu(linear(h5, 1024, 'd_h6_lin'))
