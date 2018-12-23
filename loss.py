@@ -79,11 +79,10 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
             label_penalty_fakes = tfutil.autosummary('Loss/label_penalty_fakes', label_penalty_fakes)
         loss += (label_penalty_reals + label_penalty_fakes) * cond_weight
 
-    #TODO: clss_lossを得るために、ラベルをバッチごとに読み込む関数をCANのmodel.get_yを元に実装
-    #tfrecordsからファイル名を読み込めるかが勝負になりそー
-    # smoothing = 0.9
-    # d_loss_class_real = tf.reduce_mean(
-    #     tf.nn.softmax_cross_entropy_with_logits(logits=real_class_logits, labels=smoothing * model.y))
+    smoothing = 0.9
+    d_loss_class_real = tf.reduce_mean(
+        tf.nn.softmax_cross_entropy_with_logits(logits=real_class_logits, labels=smoothing*labels))
+    loss += d_loss_class_real
 
     return loss
 
