@@ -324,10 +324,7 @@ def D_paper(
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
-            print (res)
-            print (type(y()))
-            print (y().shape)
-            if res > 2: h4 = x
+            if res == 3: h4 = y()
             return y()
         combo_out = grow(2, resolution_log2 - 2)
 
