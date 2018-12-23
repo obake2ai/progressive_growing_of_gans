@@ -328,6 +328,7 @@ def D_paper(
             if res == 3:
                 y_c = y()
                 print ('nyu!')
+            print ('by!')
             return y(), y_c
         combo_out, h4 = grow(2, resolution_log2 - 2)
 
