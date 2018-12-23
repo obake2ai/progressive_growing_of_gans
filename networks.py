@@ -325,13 +325,12 @@ def D_paper(
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
-            y_c = lambda: x
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
-            if res == 3:
-                y_c = y
+            if res > 3:
+                y_c = y()
                 print ('nyu!')
             print ('by!')
-            return y(), y_c()
+            return y(), y_c
         combo_out, h4 = grow(2, resolution_log2 - 2)
 
         print (h4.shape)
