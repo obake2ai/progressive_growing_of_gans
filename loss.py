@@ -39,7 +39,7 @@ def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
         loss += label_penalty_fakes * cond_weight
 
     g_loss_class_fake = tf.reduce_mean(
-      tf.nn.softmax_cross_entropy_with_logits(logits=fake_class_logits,
+      tf.nn.softmax_cross_entropy_with_logits_v2(logits=fake_class_logits,
         labels=(1.0/y_dim)*tf.ones_like(fake_class_out)))
     loss += lamb * g_loss_class_fake
 
@@ -88,7 +88,7 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
         loss += (label_penalty_reals + label_penalty_fakes) * cond_weight
 
     d_loss_class_real = tf.reduce_mean(
-        tf.nn.softmax_cross_entropy_with_logits(logits=real_class_logits, labels=smoothing*labels))
+        tf.nn.softmax_cross_entropy_with_logits_v2(logits=real_class_logits, labels=smoothing*labels))
     loss += d_loss_class_real
 
     return loss
