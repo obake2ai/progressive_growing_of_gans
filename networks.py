@@ -321,19 +321,12 @@ def D_paper(
     if structure == 'recursive':
         def grow(res, lod):
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
-            print (res)
-            print (type(x))
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
-            print (res)
-            print (type(x))
             x = block(x(), res); y = lambda: x
-            print (res)
-            print (type(x))
-            print (x.shape)
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
             print (res)
-            print (type(x))
-            print (x.shape)
+            print (type(y))
+            print (y.shape)
             if res > 2: h4 = x
             return y()
         combo_out = grow(2, resolution_log2 - 2)
