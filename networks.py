@@ -338,6 +338,7 @@ def D_paper(
                 print (res, y().shape)
                 return y()
             return y()
+        print ('get h4')
         h4 = grow_c(2, resolution_log2 - 2)
 
         print (h4.shape)
