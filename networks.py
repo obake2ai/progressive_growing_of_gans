@@ -253,7 +253,7 @@ def D_paper(
     mbstd_group_size    = 4,            # Group size for the minibatch standard deviation layer, 0 = disable.
     dtype               = 'float32',    # Data type to use for activations and outputs.
     fused_scale         = True,         # True = use fused conv2d + downscale2d, False = separate downscale2d layers.
-    structure           = 'linear',         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
+    structure           = None,         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically
     is_template_graph   = False,        # True = template graph constructed by the Network class, False = actual evaluation.
     class_num           = 2,            # For CAN classification.
     **kwargs):                          # Ignore unrecognized keyword args.
@@ -324,6 +324,7 @@ def D_paper(
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
+            print (x.shape)
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
             return y()
         combo_out = grow(2, resolution_log2 - 2)
