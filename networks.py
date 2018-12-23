@@ -330,13 +330,10 @@ def D_paper(
 
         def grow_c(res, lod):
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
-            if lod > 0: x = cset(x, (lod_in < lod), lambda: grow_c(res + 1, lod - 1))
+            if lod > 0 and res > 2: x = cset(x, (lod_in < lod), lambda: grow_c(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
             print ('in',res, lod)
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
-            if res == 3:
-                print (res, y().shape)
-                return y()
             return y()
         print ('get h4')
         h4 = grow_c(2, resolution_log2 - 2)
