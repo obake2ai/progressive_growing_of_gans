@@ -327,9 +327,6 @@ def D_paper(
             if res > 2: h4 = x
             return y()
         combo_out = grow(2, resolution_log2 - 2)
-        
-        scores_out = tf.identity(combo_out[:, :1], name='scores_out')
-        labels_out = tf.identity(combo_out[:, 1:], name='labels_out')
 
         shape = np.product(h4.get_shape()[1:].as_list())
         h5 = tf.reshape(h4, [-1, shape])
@@ -342,6 +339,8 @@ def D_paper(
         c_softmax = tf.nn.softmax(c_out)
 
     assert combo_out.dtype == tf.as_dtype(dtype)
+    scores_out = tf.identity(combo_out[:, :1], name='scores_out')
+    labels_out = tf.identity(combo_out[:, 1:], name='labels_out')
     return scores_out, labels_out, c_softmax, c_out
 
 #----------------------------------------------------------------------------
