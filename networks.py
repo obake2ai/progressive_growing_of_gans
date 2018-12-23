@@ -320,6 +320,7 @@ def D_paper(
     # Recursive structure: complex but efficient.
     if structure == 'recursive':
         def grow(res, lod):
+            print (res)
             x = lambda: fromrgb(downscale2d(images_in, 2**lod), res)
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
@@ -330,7 +331,6 @@ def D_paper(
 
         shape = np.product(h4.get_shape()[1:].as_list())
         h5 = tf.reshape(h4, [-1, shape])
-        print (h5.shape)
 
         #fully connected layers to classify the image into the different styles.
         h6 = leaky_relu(linear(h5, 1024, 'd_h6_lin'))
