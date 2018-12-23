@@ -644,6 +644,7 @@ def create_from_images_and_labels(tfrecord_dir, image_dir, label_dir, shuffle):
         with open(label_dir, 'r') as file:
             print (label_dir)
             labels = json.load(file)
+            print (labels)
     except:
         error('Label file was not found')
 
