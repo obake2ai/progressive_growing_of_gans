@@ -324,13 +324,23 @@ def D_paper(
             if lod > 0: x = cset(x, (lod_in < lod), lambda: grow(res + 1, lod - 1))
             x = block(x(), res); y = lambda: x
             if res > 2: y = cset(y, (lod_in > lod), lambda: lerp(x, fromrgb(downscale2d(images_in, 2**(lod+1)), res - 1), lod_in - lod))
-            if res > 2: print (x.shape)
+            if res > 2: h4 = x
             return y()
         combo_out = grow(2, resolution_log2 - 2)
 
     assert combo_out.dtype == tf.as_dtype(dtype)
     scores_out = tf.identity(combo_out[:, :1], name='scores_out')
     labels_out = tf.identity(combo_out[:, 1:], name='labels_out')
+
+    shape = np.product(h4.get_shape()[1:].as_list())
+    h5 = tf.reshape(h4, [-1, shape])
+    print (h5.shape)
+
+    #fully connected layers to classify the image into the different styles.
+    h6 = leaky_relu(linear(h5, 1024, 'd_h6_lin'))
+    h7 = leaky_relu(linear(h6, 512, 'd_h7_lin'))
+    c_out = linear(h7, class_num, 'd_co_lin')
+    c_softmax = tf.nn.softmax(c_out)
     return scores_out, labels_out, c_softmax, c_out
 
 #----------------------------------------------------------------------------
