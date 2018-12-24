@@ -643,6 +643,7 @@ def create_from_images_and_labels(tfrecord_dir, image_dir, label_dir, shuffle):
     try:
         with open(label_dir, 'rb') as file:
             labels = pickle.load(file)
+            print (labels)
     except:
         error('Label file was not found')
 
