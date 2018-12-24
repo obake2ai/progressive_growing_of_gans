@@ -15,6 +15,7 @@ import traceback
 import numpy as np
 import tensorflow as tf
 import PIL.Image
+import pickle
 
 import tfutil
 import dataset
@@ -643,7 +644,6 @@ def create_from_images_and_labels(tfrecord_dir, image_dir, label_dir, shuffle):
     try:
         with open(label_dir, 'rb') as file:
             labels = pickle.load(file)
-            print (labels)
     except:
         error('Label file was not found')
 
