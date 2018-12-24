@@ -663,9 +663,9 @@ def create_from_images_and_labels(tfrecord_dir, image_dir, label_dir, shuffle):
         for key in reordered_names:
             reordered_labels += [labels[key]]
             print ('label check :', key, labels[key])
-        print (reordered_labels)
+        print (reordered_labels.shape)
         reordered_labels = np.stack(reordered_labels, 0)
-        print (reordered_labels)
+        print (reordered_labels.shape)
         tfr.add_labels(reordered_labels)
 
 #----------------------------------------------------------------------------
