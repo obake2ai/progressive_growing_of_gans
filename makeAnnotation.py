@@ -18,4 +18,4 @@ if __name__ == '__main__':
     save_dir = './annotations'
     extension = 'JPG'
     classes = ['kiku', 'maico']
-    makeAnnotation()
+    makeAnnotation(images_dir, save_dir, extension, classes)
