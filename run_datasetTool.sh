@@ -12,4 +12,4 @@ export PATH=$PYENV_ROOT/bin:$PATH
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
-python dataset_tool.py create_from_images datasets/maico2kiku maico2kiku
+python dataset_tool.py create_from_images_and_labels datasets/maico2kiku_label maico2kiku annotations/maico2kiku_annotation.json
