@@ -642,7 +642,7 @@ def create_from_images_and_labels(tfrecord_dir, image_dir, label_dir, shuffle):
         error('Input images must be stored as RGB or grayscale')
 
     try:
-        with open(label_dir, 'rb') as file:
+        with open(label_dir, 'r') as file:
             labels = pickle.load(file)
     except:
         error('Label file was not found')
