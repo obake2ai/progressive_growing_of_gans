@@ -14,8 +14,8 @@ def makeAnnotation(image_dir, save_dir, extension, classes):
         json.dump(annDic, f)
 
 if __name__ == '__main__':
-    images_dir = '/Users/kishiyuma/Desktop/obake_ai/maico_todai/'
-    save_dir = images_dir
+    images_dir = './maico2kiku'
+    save_dir = './annotations'
     extension = 'JPG'
     classes = ['kiku', 'maico']
     makeAnnotation()
