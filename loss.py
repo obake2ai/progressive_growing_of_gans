@@ -41,12 +41,9 @@ def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
     g_loss_class_fake = tf.reduce_mean(
       tf.nn.softmax_cross_entropy_with_logits_v2(logits=fake_class_logits,
         labels=(1.0/y_dim)*tf.ones_like(fake_class_out)))
-    loss += g_loss_class_fake * can_level
+    loss2 = loss + g_loss_class_fake * can_level
 
-    print ('scores_out',fake_scores_out)
-    print ('classes_out',fake_class_out)
-
-    return loss
+    return loss, loss2
 
 #----------------------------------------------------------------------------
 # Discriminator loss function used in the paper (WGAN-GP + AC-GAN).
