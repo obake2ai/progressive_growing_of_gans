@@ -43,6 +43,9 @@ def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
         labels=(1.0/y_dim)*tf.ones_like(fake_class_out)))
     loss += g_loss_class_fake * can_level
 
+    print ('scores_out',fake_scores_out)
+    print ('classes_out',fake_class_out)
+
     return loss
 
 #----------------------------------------------------------------------------
