@@ -53,7 +53,7 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
     wgan_epsilon    = 0.001,    # Weight for the epsilon term, \epsilon_{drift}.
     wgan_target     = 1.0,      # Target value for gradient magnitudes.
     cond_weight     = 1.0,      # Weight of the conditioning terms.
-    can_level       = 0.1       # Parameter for creativety
+    can_level       = 0.1,      # Parameter for creativety
     smoothing       = 0.9):     # For Cross-Entropy
 
     latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
