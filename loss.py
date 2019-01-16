@@ -24,7 +24,7 @@ def fp32(*values):
 
 def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
     cond_weight = 1.0,  # Weight of the conditioning term.
-    y_dim       = 2,    # How many classes
+    y_dim       = 1,    # How many classes
     can_level   = 0): # Parameter for creativety
 
     latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
@@ -41,9 +41,9 @@ def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
     g_loss_class_fake = tf.reduce_mean(
       tf.nn.softmax_cross_entropy_with_logits_v2(logits=fake_class_logits,
         labels=(1.0/y_dim)*tf.ones_like(fake_class_out)))
-    loss2 = loss + g_loss_class_fake * can_level
+    loss += g_loss_class_fake * can_level
 
-    return loss, loss2
+    return loss
 
 #----------------------------------------------------------------------------
 # Discriminator loss function used in the paper (WGAN-GP + AC-GAN).
