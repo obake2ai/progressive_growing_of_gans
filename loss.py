@@ -25,7 +25,7 @@ def fp32(*values):
 def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
     cond_weight = 1.0,  # Weight of the conditioning term.
     y_dim       = 2,    # How many classes
-    lamb        = 1.0): # parameter for CAN loss
+    can_level   = 0.1): # Parameter for creativety
 
     latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
     labels = training_set.get_random_labels_tf(minibatch_size)
@@ -41,7 +41,7 @@ def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
     g_loss_class_fake = tf.reduce_mean(
       tf.nn.softmax_cross_entropy_with_logits_v2(logits=fake_class_logits,
         labels=(1.0/y_dim)*tf.ones_like(fake_class_out)))
-    loss += lamb * g_loss_class_fake
+    loss += g_loss_class_fake * can_level
 
     return loss
 
@@ -53,6 +53,7 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
     wgan_epsilon    = 0.001,    # Weight for the epsilon term, \epsilon_{drift}.
     wgan_target     = 1.0,      # Target value for gradient magnitudes.
     cond_weight     = 1.0,      # Weight of the conditioning terms.
+    can_level       = 0.1       # Parameter for creativety
     smoothing       = 0.9):     # For Cross-Entropy
 
     latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
@@ -89,7 +90,7 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
 
     d_loss_class_real = tf.reduce_mean(
         tf.nn.softmax_cross_entropy_with_logits_v2(logits=real_class_logits, labels=smoothing*labels))
-    loss += d_loss_class_real
+    loss += d_loss_class_real * can_level
 
     return loss
 
