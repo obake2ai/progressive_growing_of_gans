@@ -227,7 +227,7 @@ def train_progressive_gan(
         # Run training ops.
         for repeat in range(minibatch_repeats):
             for _ in range(D_repeats):
-                print (tfutil.run(G_loss, {G: G_gpu.trainables, D: D_gpu.trainables, training_set: training_set, minibatch_size: sched.minibatch}))
+                print (tfutil.run(G_loss, {G: G_gpu.trainables, D: D_gpu.trainables, training_set: training_set, minibatch_in: sched.minibatch}))
                 tfutil.run([D_train_op, Gs_update_op], {lod_in: sched.lod, lrate_in: sched.D_lrate, minibatch_in: sched.minibatch})
                 cur_nimg += sched.minibatch
             tfutil.run([G_train_op], {lod_in: sched.lod, lrate_in: sched.G_lrate, minibatch_in: sched.minibatch})
