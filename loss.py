@@ -37,29 +37,6 @@ def G_wgan_acgan(G, D, opt, training_set, minibatch_size,
         loss += label_penalty_fakes * cond_weight
     return loss
 
-def G_wgan_acgan_can(G, D, opt, training_set, minibatch_size,
-    cond_weight = 1.0,  # Weight of the conditioning term.
-    y_dim       = 2,    # Number of classes
-    can_level   = 0.1): # Parameter for creativety
-
-    latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
-    labels = training_set.get_random_labels_tf(minibatch_size)
-    fake_images_out = G.get_output_for(latents, labels, is_training=True)
-    fake_scores_out, fake_labels_out, fake_class_out, fake_class_logits = fp32(D.get_output_for(fake_images_out, is_training=True))
-    loss = -fake_scores_out
-
-    g_loss_class_fake = tf.reduce_mean(
-      tf.nn.softmax_cross_entropy_with_logits_v2(logits=fake_class_logits,
-        labels=(1.0/y_dim)*tf.ones_like(fake_class_out)))
-    loss += g_loss_class_fake * can_level
-
-    if D.output_shapes[1][1] > 0:
-        with tf.name_scope('LabelPenalty'):
-            label_penalty_fakes = tf.nn.softmax_cross_entropy_with_logits_v2(labels=labels, logits=fake_labels_out)
-        loss += label_penalty_fakes * cond_weight
-
-    return loss
-
 #----------------------------------------------------------------------------
 # Discriminator loss function used in the paper (WGAN-GP + AC-GAN).
 
@@ -102,12 +79,36 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, reals, labels,
         loss += (label_penalty_reals + label_penalty_fakes) * cond_weight
     return loss
 
+# CAN LOSS
+def G_wgan_acgan_can(G, D, opt, training_set, minibatch_size,
+    cond_weight = 1.0,  # Weight of the conditioning term.
+    y_dim       = 2,    # Number of classes
+    can_level   = 0.2): # Parameter for creativety
+
+    latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
+    labels = training_set.get_random_labels_tf(minibatch_size)
+    fake_images_out = G.get_output_for(latents, labels, is_training=True)
+    fake_scores_out, fake_labels_out, fake_class_out, fake_class_logits = fp32(D.get_output_for(fake_images_out, is_training=True))
+    loss = -fake_scores_out
+
+    g_loss_class_fake = tf.reduce_mean(
+      tf.nn.softmax_cross_entropy_with_logits_v2(logits=fake_class_logits,
+        labels=(1.0/y_dim)*tf.ones_like(fake_class_out)))
+    loss += g_loss_class_fake * can_level
+
+    if D.output_shapes[1][1] > 0:
+        with tf.name_scope('LabelPenalty'):
+            label_penalty_fakes = tf.nn.softmax_cross_entropy_with_logits_v2(labels=labels, logits=fake_labels_out)
+        loss += label_penalty_fakes * cond_weight
+
+    return loss
+
 def D_wgangp_acgan_can(G, D, opt, training_set, minibatch_size, reals, labels,
     wgan_lambda     = 10.0,     # Weight for the gradient penalty term.
     wgan_epsilon    = 0.001,    # Weight for the epsilon term, \epsilon_{drift}.
     wgan_target     = 1.0,      # Target value for gradient magnitudes.
     cond_weight     = 1.0,      # Weight of the conditioning terms.
-    can_level       = 0.1,      # Parameter for creativety
+    can_level       = 0.2,      # Parameter for creativety
     smoothing       = 0.9):     # For Cross-Entropy
 
     latents = tf.random_normal([minibatch_size] + G.input_shapes[0][1:])
