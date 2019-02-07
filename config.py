@@ -42,14 +42,14 @@ random_seed = 1000                                          # Global random seed
 dataset     = EasyDict()                                    # Options for dataset.load_dataset().
 train       = EasyDict(func='train.train_progressive_gan')  # Options for main training func.
 G           = EasyDict(func='networks.G_paper')             # Options for generator network.
-#D           = EasyDict(func='networks.D_paper')             # Options for discriminator network.
-D           = EasyDict(func='networks.D_can')             # Options for discriminator network.
+D           = EasyDict(func='networks.D_paper')             # Options for discriminator network.
+#D           = EasyDict(func='networks.D_can')             # Options for discriminator network.
 G_opt       = EasyDict(beta1=0.0, beta2=0.99, epsilon=1e-8) # Options for generator optimizer.
 D_opt       = EasyDict(beta1=0.0, beta2=0.99, epsilon=1e-8) # Options for discriminator optimizer.
-#G_loss      = EasyDict(func='loss.G_wgan_acgan')            # Options for generator loss.
-#D_loss      = EasyDict(func='loss.D_wgangp_acgan')          # Options for discriminator loss.
-G_loss      = EasyDict(func='loss.G_wgan_acgan_can')            # Options for generator loss.
-D_loss      = EasyDict(func='loss.D_wgangp_acgan_can')          # Options for discriminator loss.
+G_loss      = EasyDict(func='loss.G_wgan_acgan')            # Options for generator loss.
+D_loss      = EasyDict(func='loss.D_wgangp_acgan')          # Options for discriminator loss.
+#G_loss      = EasyDict(func='loss.G_wgan_acgan_can')            # Options for generator loss.
+#D_loss      = EasyDict(func='loss.D_wgangp_acgan_can')          # Options for discriminator loss.
 sched       = EasyDict()                                    # Options for train.TrainingSchedule.
 grid        = EasyDict(size='1080p', layout='random')       # Options for train.setup_snapshot_image_grid().
 
@@ -58,7 +58,8 @@ grid        = EasyDict(size='1080p', layout='random')       # Options for train.
 #desc += '-celeba';              dataset = EasyDict(tfrecord_dir='celeba'); train.mirror_augment = True
 #desc += '-cifar10';             dataset = EasyDict(tfrecord_dir='cifar10')
 #desc += '-maico2kiku';          dataset = EasyDict(tfrecord_dir='maico2kiku')
-desc += '-maico2kiku_label';          dataset = EasyDict(tfrecord_dir='maico2kiku_label')
+#desc += '-maico2kiku_label';          dataset = EasyDict(tfrecord_dir='maico2kiku_label')
+desc += '-aiweiwei';          dataset = EasyDict(tfrecord_dir='aiweiwei')
 #desc += '-maico2kiku_label_test';          dataset = EasyDict(tfrecord_dir='maico2kiku_label_test')
 #desc += '-maico2kiku_v2';          dataset = EasyDict(tfrecord_dir='maico2kiku_v2')
 #desc += '-kishi_flower';        dataset = EasyDict(tfrecord_dir='kishi_flower')
