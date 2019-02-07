@@ -620,9 +620,9 @@ def create_from_images(tfrecord_dir, image_dir, shuffle):
         for idx in range(order.size):
             img = np.asarray(PIL.Image.open(image_filenames[order[idx]]))
             print (idx, "/", len(image_filenames), ":", image_filenames[order[idx]])
-            print (img.shape)
-            if channels == 1:
-                img = img[np.newaxis, :, :] # HW => CHW
+            if img.ndim != 3:
+                img = np.stack((img,)*3, axis=-1) # HW => CHW
+                img = img.transpose(2, 0, 1) # HWC => CHW
             else:
                 img = img.transpose(2, 0, 1) # HWC => CHW
             tfr.add_image(img)
