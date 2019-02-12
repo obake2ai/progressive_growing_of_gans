@@ -57,10 +57,10 @@ grid        = EasyDict(size='1080p', layout='random')       # Options for train.
 #desc += '-celebahq';            dataset = EasyDict(tfrecord_dir='celebahq'); train.mirror_augment = True
 #desc += '-celeba';              dataset = EasyDict(tfrecord_dir='celeba'); train.mirror_augment = True
 #desc += '-cifar10';             dataset = EasyDict(tfrecord_dir='cifar10')
-# desc += '-maico2kiku';          dataset = EasyDict(tfrecord_dir='maico2kiku')
+desc += '-maico2kiku';          dataset = EasyDict(tfrecord_dir='maico2kiku')
 #desc += '-shunga';          dataset = EasyDict(tfrecord_dir='shunga')
 #desc += '-yayoikusama';          dataset = EasyDict(tfrecord_dir='yayoikusama')
-desc += '-shunga_pure';          dataset = EasyDict(tfrecord_dir='shunga_pure')
+#desc += '-shunga_pure';          dataset = EasyDict(tfrecord_dir='shunga_pure')
 #desc += '-shunga_mini';          dataset = EasyDict(tfrecord_dir='shunga_mini')
 #desc += '-maico2kiku_label';          dataset = EasyDict(tfrecord_dir='maico2kiku_label')
 #desc += '-aiweiwei';          dataset = EasyDict(tfrecord_dir='aiweiwei')
