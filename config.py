@@ -59,7 +59,7 @@ grid        = EasyDict(size='1080p', layout='random')       # Options for train.
 #desc += '-cifar10';             dataset = EasyDict(tfrecord_dir='cifar10')
 #desc += '-maico2kiku';          dataset = EasyDict(tfrecord_dir='maico2kiku')
 #desc += '-shunga';          dataset = EasyDict(tfrecord_dir='shunga')
-desc += '-tarookamoto';          dataset = EasyDict(tfrecord_dir='tarookamoto')
+desc += '-damienhirst';          dataset = EasyDict(tfrecord_dir='damienhirst')
 #desc += '-shunga_pure';          dataset = EasyDict(tfrecord_dir='shunga_pure')
 #desc += '-shunga_mini';          dataset = EasyDict(tfrecord_dir='shunga_mini')
 #desc += '-maico2kiku_label';          dataset = EasyDict(tfrecord_dir='maico2kiku_label')
