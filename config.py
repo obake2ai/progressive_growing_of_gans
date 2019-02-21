@@ -60,7 +60,7 @@ grid        = EasyDict(size='1080p', layout='random')       # Options for train.
 #desc += '-maico2kiku';          dataset = EasyDict(tfrecord_dir='maico2kiku')
 #desc += '-shunga';          dataset = EasyDict(tfrecord_dir='shunga')
 #desc += '-maico2kiku';          dataset = EasyDict(tfrecord_dir='maico2kiku')
-desc += '-shunga_full';          dataset = EasyDict(tfrecord_dir='shunga_full')
+desc += '-summer';          dataset = EasyDict(tfrecord_dir='summer')
 #desc += '-shunga_mini';          dataset = EasyDict(tfrecord_dir='shunga_mini')
 #desc += '-maico2kiku_label';          dataset = EasyDict(tfrecord_dir='maico2kiku_label')
 #desc += '-aiweiwei';          dataset = EasyDict(tfrecord_dir='aiweiwei')
@@ -147,7 +147,7 @@ desc += '-fp32'; sched.max_minibatch_per_gpu = {256: 16, 512: 8, 1024: 2}
 # Utility scripts.
 # To run, uncomment the appropriate line and launch train.py.
 
-train = EasyDict(func='util_scripts.generate_fake_images', run_id=222, num_pngs=300); num_gpus = 1; desc = 'fake-images-' + str(train.run_id)
+#train = EasyDict(func='util_scripts.generate_fake_images', run_id=222, num_pngs=300); num_gpus = 1; desc = 'fake-images-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_fake_images', run_id=23, grid_size=[15,8], num_pngs=10, image_shrink=4); num_gpus = 1; desc = 'fake-grids-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_interpolation_video', run_id=207, grid_size=[1,1], duration_sec=600.0, smoothing_sec=1.0, random_seed=1000); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_training_video', run_id=23, duration_sec=20.0); num_gpus = 1; desc = 'training-video-' + str(train.run_id)
