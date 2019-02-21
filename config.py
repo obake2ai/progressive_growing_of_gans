@@ -60,10 +60,10 @@ grid        = EasyDict(size='1080p', layout='random')       # Options for train.
 #desc += '-maico2kiku';          dataset = EasyDict(tfrecord_dir='maico2kiku')
 #desc += '-shunga';          dataset = EasyDict(tfrecord_dir='shunga')
 #desc += '-maico2kiku';          dataset = EasyDict(tfrecord_dir='maico2kiku')
-#desc += '-summer';          dataset = EasyDict(tfrecord_dir='summer')
+desc += '-summer';          dataset = EasyDict(tfrecord_dir='summer')
 #desc += '-fall';          dataset = EasyDict(tfrecord_dir='fall')
 #desc += '-spring';          dataset = EasyDict(tfrecord_dir='spring')
-desc += '-winter';          dataset = EasyDict(tfrecord_dir='winter')
+#desc += '-winter';          dataset = EasyDict(tfrecord_dir='winter')
 #desc += '-shunga_mini';          dataset = EasyDict(tfrecord_dir='shunga_mini')
 #desc += '-maico2kiku_label';          dataset = EasyDict(tfrecord_dir='maico2kiku_label')
 #desc += '-aiweiwei';          dataset = EasyDict(tfrecord_dir='aiweiwei')
@@ -124,7 +124,8 @@ desc += '-cond'; dataset.max_label_size = 'full'# conditioned on full label
 #desc += '-preset-v2-2gpus'; num_gpus = 2; sched.minibatch_base = 8; sched.minibatch_dict = {4: 256, 8: 256, 16: 128, 32: 64, 64: 32, 128: 16, 256: 8}; sched.G_lrate_dict = {512: 0.0015, 1024: 0.002}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict); train.total_kimg = 12000
 #desc += '-preset-v2-4gpus'; num_gpus = 4; sched.minibatch_base = 16; sched.minibatch_dict = {4: 512, 8: 256, 16: 128, 32: 64, 64: 32, 128: 16}; sched.G_lrate_dict = {256: 0.0015, 512: 0.002, 1024: 0.003}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict); train.total_kimg = 12000
 #desc += '-preset-v2-4gpus'; num_gpus = 4; sched.minibatch_base = 32; sched.minibatch_dict = {4: 1024, 8: 512, 16: 256, 32: 128, 64: 64, 128: 32}; sched.G_lrate_dict = {256: 0.0015, 512: 0.002, 1024: 0.003}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict); train.total_kimg = 12000
-desc += '-preset-v2-4gpus'; num_gpus = 4; sched.minibatch_base = 64; sched.minibatch_dict = {4: 2048, 8: 1024, 16: 512, 32: 256, 64: 128, 128: 64}; sched.G_lrate_dict = {256: 0.0015, 512: 0.002, 1024: 0.003}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict); train.total_kimg = 12000
+#desc += '-preset-v2-4gpus'; num_gpus = 4; sched.minibatch_base = 64; sched.minibatch_dict = {4: 2048, 8: 1024, 16: 512, 32: 256, 64: 128, 128: 64}; sched.G_lrate_dict = {256: 0.0015, 512: 0.002, 1024: 0.003}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict); train.total_kimg = 12000
+desc += '-preset-v2-4gpus'; num_gpus = 4; sched.minibatch_base = 128; sched.minibatch_dict = {4: 2048, 8: 1024, 16: 512, 32: 256, 64: 128, 128: 64}; sched.G_lrate_dict = {256: 0.0015, 512: 0.002, 1024: 0.003}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict); train.total_kimg = 12000
 #desc += '-preset-v2-8gpus'; num_gpus = 8; sched.minibatch_base = 32; sched.minibatch_dict = {4: 512, 8: 256, 16: 128, 32: 64, 64: 32}; sched.G_lrate_dict = {128: 0.0015, 256: 0.002, 512: 0.003, 1024: 0.003}; sched.D_lrate_dict = EasyDict(sched.G_lrate_dict); train.total_kimg = 12000
 
 # Numerical precision (choose one).
