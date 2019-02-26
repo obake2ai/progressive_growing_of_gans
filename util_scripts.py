@@ -116,8 +116,7 @@ def generate_interpolation_video_range(run_id, snapshot=None, grid_size=[1,1], i
     result_subdir = misc.create_result_subdir(config.result_dir, config.desc)
 
     for offset in range(-num_frames, num_frames):
-        if mp4 is None:
-            mp4 = misc.get_id_string_for_network_pkl(network_pkl) + '_' + str(offset) + '.mp4'
+        mp4 = misc.get_id_string_for_network_pkl(network_pkl) + '_' + str(offset) + '.mp4'
         all_latents = all_latents_raw + offset/num_frames
         moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, mp4), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
     open(os.path.join(result_subdir, '_done.txt'), 'wt').close()
