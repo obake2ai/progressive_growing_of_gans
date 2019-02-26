@@ -121,6 +121,43 @@ def generate_interpolation_video_range(run_id, snapshot=None, grid_size=[1,1], i
         moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, mp4), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
     open(os.path.join(result_subdir, '_done.txt'), 'wt').close()
 
+def generate_interpolation_video_variation(run_id, snapshot=None, grid_size=[1,1], image_shrink=1, image_zoom=1, duration_sec=60.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8, num_variation=10):
+    network_pkl = misc.locate_network_pkl(run_id, snapshot)
+
+    num_frames = int(np.rint(duration_sec * mp4_fps))
+
+    print('Loading network from "%s"...' % network_pkl)
+    G, D, Gs = misc.load_network_pkl(run_id, snapshot)
+
+    # Frame generation func for moviepy.
+    def make_frame(t):
+        frame_idx = int(np.clip(np.round(t * mp4_fps), 0, num_frames - 1))
+        latents = all_latents[frame_idx]
+        labels = np.zeros([latents.shape[0], 0], np.float32)
+        images = Gs.run(latents, labels, minibatch_size=minibatch_size, num_gpus=config.num_gpus, out_mul=127.5, out_add=127.5, out_shrink=image_shrink, out_dtype=np.uint8)
+        grid = misc.create_image_grid(images, grid_size).transpose(1, 2, 0) # HWC
+        if image_zoom > 1:
+            grid = scipy.ndimage.zoom(grid, [image_zoom, image_zoom, 1], order=0)
+        if grid.shape[2] == 1:
+            grid = grid.repeat(3, 2) # grayscale => RGB
+        return grid
+
+    # Generate video.
+    import moviepy.editor # pip install moviepy
+    result_subdir = misc.create_result_subdir(config.result_dir, config.desc)
+
+    for offset in range(-int(num_variation/2), int(num_variation/2)):
+        mp4 = misc.get_id_string_for_network_pkl(network_pkl) + '_' + str(random_seed + offset) + '.mp4'
+        print('Generating latent vectors...: seed ' + str(random_seed + offset))
+        random_state = np.random.RandomState(random_seed + offset)
+        shape = [num_frames, np.prod(grid_size)] + Gs.input_shape[1:] # [frame, image, channel, component]
+        all_latents = random_state.randn(*shape).astype(np.float32)
+        all_latents = scipy.ndimage.gaussian_filter(all_latents, [smoothing_sec * mp4_fps] + [0] * len(Gs.input_shape), mode='wrap')
+        all_latents /= np.sqrt(np.mean(np.square(all_latents)))
+        all_latents_raw = all_latents
+        moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, mp4), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
+    open(os.path.join(result_subdir, '_done.txt'), 'wt').close()
+
 #----------------------------------------------------------------------------
 # Generate MP4 video of training progress for a previous training run.
 # To run, uncomment the appropriate line in config.py and launch train.py.
