@@ -65,7 +65,7 @@ grid        = EasyDict(size='1080p', layout='random')       # Options for train.
 # desc += '-spring';          dataset = EasyDict(tfrecord_dir='spring')
 #desc += '-winter';          dataset = EasyDict(tfrecord_dir='winter')
 #desc += '-shunga_mini';          dataset = EasyDict(tfrecord_dir='shunga_mini')
-desc += '-maico2kiku_lorem_nomirror';          dataset = EasyDict(tfrecord_dir='maico2kiku_lorem_nomirror')
+#desc += '-maico2kiku_lorem_nomirror';          dataset = EasyDict(tfrecord_dir='maico2kiku_lorem_nomirror')
 #desc += '-aiweiwei';          dataset = EasyDict(tfrecord_dir='aiweiwei')
 #desc += '-takashimurakami';          dataset = EasyDict(tfrecord_dir='takashimurakami')
 #desc += '-maico2kiku_label_test';          dataset = EasyDict(tfrecord_dir='maico2kiku_label_test')
@@ -155,7 +155,7 @@ desc += '-fp32'; sched.max_minibatch_per_gpu = {256: 16, 512: 8, 1024: 2}
 
 #train = EasyDict(func='util_scripts.generate_fake_images', run_id=222, num_pngs=300); num_gpus = 1; desc = 'fake-images-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_fake_images', run_id=23, grid_size=[15,8], num_pngs=10, image_shrink=4); num_gpus = 1; desc = 'fake-grids-' + str(train.run_id)
-#train = EasyDict(func='util_scripts.generate_interpolation_video', run_id=274, grid_size=[1,1], duration_sec=150.0, smoothing_sec=1.0, random_seed=2000); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
+train = EasyDict(func='util_scripts.generate_interpolation_video', run_id=274, grid_size=[1,1], duration_sec=150.0, smoothing_sec=1.0, random_seed=2000); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_interpolation_video_variation', run_id=250, snapshot=9900 ,grid_size=[1,1], duration_sec=16.0, smoothing_sec=1.0, random_seed=1000, num_variation=100); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)#train = EasyDict(func='util_scripts.generate_interpolation_video_range', run_id=203, grid_size=[1,1], duration_sec=150.0, smoothing_sec=1.0, random_seed=2000); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_training_video', run_id=23, duration_sec=20.0); num_gpus = 1; desc = 'training-video-' + str(train.run_id)
 
