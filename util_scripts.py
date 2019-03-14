@@ -105,10 +105,10 @@ def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], i
             v_latents[1:, :, idx] = latents[0, :, idx]
         return v_latents
 
-    all_latents_a = choco(all_latents, list(random_state.randint(0, 512, 80)))
-    all_latents_b = choco(all_latents, list(random_state.randint(0, 512, 80)))
-    all_latents_c = choco(all_latents, list(random_state.randint(0, 512, 80)))
-    all_latents_d = choco(all_latents, list(random_state.randint(0, 512, 80)))
+    all_latents_a = choco(all_latents, list(random_state.randint(0, 512, 160)))
+    all_latents_b = choco(all_latents, list(random_state.randint(0, 512, 160)))
+    all_latents_c = choco(all_latents, list(random_state.randint(0, 512, 160)))
+    all_latents_d = choco(all_latents, list(random_state.randint(0, 512, 160)))
     latents_list = [all_latents_a, all_latents_b, all_latents_c, all_latents_d]
 
     # Frame generation func for moviepy.
