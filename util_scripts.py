@@ -109,9 +109,9 @@ def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], i
     all_latents_1 = choco(all_latents, [1])
     all_latents_01 = choco(all_latents, [0,1])
     latents_list = [all_latents_0, all_latents_1, all_latents_01]
-    print ('0',all_latents_0[:1, :1, :1])
-    print ('1',all_latents_1[:1, :1, :1])
-    print ('01',all_latents_01[:1, :1, :1])
+    print ('0',all_latents_0[:2, :2, :2])
+    print ('1',all_latents_1[:2, :2, :2])
+    print ('01',all_latents_01[:2, :2, :2])
 
     # Frame generation func for moviepy.
     def make_frame(t):
