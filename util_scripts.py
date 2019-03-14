@@ -82,7 +82,7 @@ def generate_interpolation_video(run_id, snapshot=None, grid_size=[1,1], image_s
     moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, mp4), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
     open(os.path.join(result_subdir, '_done.txt'), 'wt').close()
 
-def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], image_shrink=1, image_zoom=1, duration_sec=60.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8):
+def generate_interpolation_video_choco(run_id, snapshot=None, chocos=80, num_chocos=4, grid_size=[1,1], image_shrink=1, image_zoom=1, duration_sec=60.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8):
     network_pkl = misc.locate_network_pkl(run_id, snapshot)
     if mp4 is None:
         mp4 = misc.get_id_string_for_network_pkl(network_pkl) + '-lerp.mp4'
@@ -105,11 +105,9 @@ def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], i
             v_latents[1:, :, idx] = latents[0, :, idx]
         return v_latents
 
-    all_latents_a = choco(all_latents, list(random_state.randint(0, 512, 160)))
-    all_latents_b = choco(all_latents, list(random_state.randint(0, 512, 160)))
-    all_latents_c = choco(all_latents, list(random_state.randint(0, 512, 160)))
-    all_latents_d = choco(all_latents, list(random_state.randint(0, 512, 160)))
-    latents_list = [all_latents_a, all_latents_b, all_latents_c, all_latents_d]
+    latents_list = []
+    for _ in range(num_chocos):
+        latents_list.append(choco(all_latents, list(random_state.randint(0, 512, chocos))))
 
     # Frame generation func for moviepy.
     def make_frame(t):
