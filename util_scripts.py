@@ -128,7 +128,7 @@ def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], i
     result_subdir = misc.create_result_subdir(config.result_dir, config.desc)
     for idx in range(len(all_latents_list)):
         all_latents = all_latents_list[idx]
-        moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, mp4), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
+        moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, str(idx), mp4), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
     open(os.path.join(result_subdir, '_done.txt'), 'wt').close()
 
 def generate_interpolation_video_range(run_id, snapshot=None, grid_size=[1,1], image_shrink=1, image_zoom=1, duration_sec=60.0, smoothing_sec=1.0, mp4=None, mp4_fps=30, mp4_codec='libx265', mp4_bitrate='16M', random_seed=1000, minibatch_size=8):
