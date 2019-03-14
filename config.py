@@ -155,7 +155,7 @@ desc += '-fp32'; sched.max_minibatch_per_gpu = {256: 16, 512: 8, 1024: 2}
 
 #train = EasyDict(func='util_scripts.generate_fake_images', run_id=222, num_pngs=300); num_gpus = 1; desc = 'fake-images-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_fake_images', run_id=23, grid_size=[15,8], num_pngs=10, image_shrink=4); num_gpus = 1; desc = 'fake-grids-' + str(train.run_id)
-train = EasyDict(func='util_scripts.generate_interpolation_video_choco', run_id=232, snapshot=None, chocos=10, num_chocos=20, grid_size=[1,1], duration_sec=6.0, smoothing_sec=1.0, random_seed=2013); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
+train = EasyDict(func='util_scripts.generate_interpolation_video_choco', run_id=232, snapshot=None, chocos=100, num_chocos=20, grid_size=[1,1], duration_sec=6.0, smoothing_sec=1.0, random_seed=2013); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_interpolation_video_range', run_id=207, grid_size=[1,1], duration_sec=10.0, smoothing_sec=1.0, random_seed=2000); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_interpolation_video_variation', run_id=232, snapshot=None ,grid_size=[1,1], duration_sec=60.0, smoothing_sec=2.0, random_seed=2013, num_variation=10); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_training_video', run_id=23, duration_sec=20.0); num_gpus = 1; desc = 'training-video-' + str(train.run_id)
