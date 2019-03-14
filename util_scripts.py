@@ -109,11 +109,13 @@ def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], i
     all_latents_1 = choco(all_latents, [1])
     all_latents_01 = choco(all_latents, [0,1])
     latents_list = [all_latents_0, all_latents_1, all_latents_01]
+    prnt ('0',all_latents_0[:1, :2])
+    prnt ('1',all_latents_1[:1, :2])
+    prnt ('01',all_latents_01[:1, :2])
 
     # Frame generation func for moviepy.
     def make_frame(t):
         frame_idx = int(np.clip(np.round(t * mp4_fps), 0, num_frames - 1))
-        if frame_idx == 0: print (all_latents[frame_idx])
         latents = all_latents[frame_idx]
         labels = np.zeros([latents.shape[0], 0], np.float32)
         images = Gs.run(latents, labels, minibatch_size=minibatch_size, num_gpus=config.num_gpus, out_mul=127.5, out_add=127.5, out_shrink=image_shrink, out_dtype=np.uint8)
