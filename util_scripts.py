@@ -108,11 +108,12 @@ def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], i
     all_latents_0 = choco(all_latents, [0])
     all_latents_1 = choco(all_latents, [1])
     all_latents_01 = choco(all_latents, [0,1])
-    all_latents_list = [all_latents_0, all_latents_1, all_latents_01]
+    latents_list = [all_latents_0, all_latents_1, all_latents_01]
 
     # Frame generation func for moviepy.
     def make_frame(t):
         frame_idx = int(np.clip(np.round(t * mp4_fps), 0, num_frames - 1))
+        if frame_idx == 0: print (all_latents[frame_idx])
         latents = all_latents[frame_idx]
         labels = np.zeros([latents.shape[0], 0], np.float32)
         images = Gs.run(latents, labels, minibatch_size=minibatch_size, num_gpus=config.num_gpus, out_mul=127.5, out_add=127.5, out_shrink=image_shrink, out_dtype=np.uint8)
@@ -127,7 +128,7 @@ def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], i
     import moviepy.editor # pip install moviepy
     result_subdir = misc.create_result_subdir(config.result_dir, config.desc)
     for idx in range(len(all_latents_list)):
-        all_latents = all_latents_list[idx]
+        all_latents = latents_list[idx]
         moviepy.editor.VideoClip(make_frame, duration=duration_sec).write_videofile(os.path.join(result_subdir, mp4.replace('-lerp.mp4', '-%s.mp4'%str(idx).zfill(3))), fps=mp4_fps, codec='libx264', bitrate=mp4_bitrate)
     open(os.path.join(result_subdir, '_done.txt'), 'wt').close()
 
