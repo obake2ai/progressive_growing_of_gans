@@ -100,19 +100,15 @@ def generate_interpolation_video_choco(run_id, snapshot=None, grid_size=[1,1], i
 
     def choco(latents, vidx):
         v_latents = np.copy(latents)
-        for idx in range(latents.shape[1]):
+        for idx in range(latents.shape[2]):
           if not idx in vidx:
-            v_latents[1:][:, idx] = latents[0, idx]
+            v_latents[1:, :, idx] = latents[0, :, idx]
         return v_latents
 
     all_latents_0 = choco(all_latents, [0])
     all_latents_1 = choco(all_latents, [1])
     all_latents_01 = choco(all_latents, [0,1])
     latents_list = [all_latents_0, all_latents_1, all_latents_01]
-    print ('r',all_latents.shape)
-    print ('0',all_latents_0[:2, :2, :2])
-    print ('1',all_latents_1[:2, :2, :2])
-    print ('01',all_latents_01[:2, :2, :2])
 
     # Frame generation func for moviepy.
     def make_frame(t):
