@@ -153,7 +153,7 @@ desc += '-fp32'; sched.max_minibatch_per_gpu = {256: 16, 512: 8, 1024: 2}
 # Utility scripts.
 # To run, uncomment the appropriate line and launch train.py.
 
-#train = EasyDict(func='util_scripts.generate_fake_images', run_id=222, num_pngs=300); num_gpus = 1; desc = 'fake-images-' + str(train.run_id)
+train = EasyDict(func='util_scripts.generate_fake_images', run_id=374, num_pngs=1000); num_gpus = 1; desc = 'sneeuw-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_fake_images', run_id=23, grid_size=[15,8], num_pngs=10, image_shrink=4); num_gpus = 1; desc = 'fake-grids-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_interpolation_video_choco', run_id=232, snapshot=None, chocos=512, num_chocos=20, grid_size=[1,1], duration_sec=12.0, smoothing_sec=1.0, random_seed=2013); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
 #train = EasyDict(func='util_scripts.generate_interpolation_video_range', run_id=207, grid_size=[1,1], duration_sec=10.0, smoothing_sec=1.0, random_seed=2000); num_gpus = 1; desc = 'interpolation-video-' + str(train.run_id)
