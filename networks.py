@@ -91,7 +91,7 @@ def upscale2d(x, factor=2):
 
 # Bilinear upscaling layer:
 
-def upscale2d_bl(x, facter=2):
+def upscale2d_bl(x, factor=2):
     assert isinstance(factor, int) and factor >= 1
     if factor == 1: return x
     with tf.variable_scope('Upscale2D_Bilinear'):
