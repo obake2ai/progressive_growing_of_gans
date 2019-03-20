@@ -96,8 +96,8 @@ def upscale2d_bl(x, factor=2):
     if factor == 1: return x
     with tf.variable_scope('Upscale2D_Bilinear'):
         s = x.shape
-        new_height = int(round(s[1] * factor))
-        new_width = int(round(s[2] * factor))
+        new_height = int(np.round(s[1] * factor))
+        new_width = int(np.round(s[2] * factor))
         resized = tf.image.resize_images(x, [-1, new_height, new_width, -1])
         return resized
 
