@@ -89,6 +89,18 @@ def upscale2d(x, factor=2):
         x = tf.reshape(x, [-1, s[1], s[2] * factor, s[3] * factor])
         return x
 
+# Bilinear upscaling layer:
+
+def upscale2d_bl(x, facter=2):
+    assert isinstance(factor, int) and factor >= 1
+    if factor == 1: return x
+    with tf.variable_scope('Upscale2D_Bilinear'):
+        s = x.shape
+        new_height = int(round(s[1] * factor))
+        new_width = int(round(s[2] * factor))
+        resized = tf.image.resize_images(x, [-1, new_height, new_width, -1])
+        return resized
+
 #----------------------------------------------------------------------------
 # Fused upscale2d + conv2d.
 # Faster and uses less memory than performing the operations separately.
@@ -288,7 +300,7 @@ def G_obake(
                     with tf.variable_scope('Conv0_up'):
                         x = PN(act(apply_bias(upscale2d_conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
                 else:
-                    x = upscale2d(x)
+                    x = upscale2d_bl(x)
                     with tf.variable_scope('Conv0'):
                         x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
                 with tf.variable_scope('Conv1'):
@@ -307,7 +319,7 @@ def G_obake(
             lod = resolution_log2 - res
             x = block(x, res)
             img = torgb(x, res)
-            images_out = upscale2d(images_out)
+            images_out = upscale2d_bl(images_out)
             with tf.variable_scope('Grow_lod%d' % lod):
                 images_out = lerp_clip(img, images_out, lod_in - lod)
 
@@ -315,8 +327,8 @@ def G_obake(
     if structure == 'recursive':
         def grow(x, res, lod):
             y = block(x, res)
-            img = lambda: upscale2d(torgb(y, res), 2**lod)
-            if res > 2: img = cset(img, (lod_in > lod), lambda: upscale2d(lerp(torgb(y, res), upscale2d(torgb(x, res - 1)), lod_in - lod), 2**lod))
+            img = lambda: upscale2d_bl(torgb(y, res), 2**lod)
+            if res > 2: img = cset(img, (lod_in > lod), lambda: upscale2d_bl(lerp(torgb(y, res), upscale2d_bl(torgb(x, res - 1)), lod_in - lod), 2**lod))
             if lod > 0: img = cset(img, (lod_in < lod), lambda: grow(y, res + 1, lod - 1))
             return img()
         images_out = grow(combo_in, 2, resolution_log2 - 2)
