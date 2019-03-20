@@ -144,8 +144,8 @@ def train_progressive_gan(
     save_tf_graph           = False,        # Include full TensorFlow computation graph in the tfevents file?
     save_weight_histograms  = False,        # Include weight histograms in the tfevents file?
     resume_run_id           = 236,         # Run ID or network pkl to resume training from, None = start from scratch.
-    resume_snapshot         = 12000,         # Snapshot index to resume training from, None = autodetect.
-    resume_kimg             = 12000,          # Assumed training progress at the beginning. Affects reporting and training schedule.
+    resume_snapshot         = 10000,         # Snapshot index to resume training from, None = autodetect.
+    resume_kimg             = 10000,          # Assumed training progress at the beginning. Affects reporting and training schedule.
     resume_time             = 0.0):         # Assumed wallclock time at the beginning. Affects reporting.
 
     maintenance_start_time = time.time()
