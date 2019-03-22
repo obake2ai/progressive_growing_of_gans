@@ -41,7 +41,7 @@ desc        = 'pgan'                                        # Description string
 random_seed = 1000                                          # Global random seed.
 dataset     = EasyDict()                                    # Options for dataset.load_dataset().
 train       = EasyDict(func='train.train_progressive_gan')  # Options for main training func.
-G           = EasyDict(func='networks.G_obake')             # Options for generator network.
+G           = EasyDict(func='networks.G_paper')             # Options for generator network.
 D           = EasyDict(func='networks.D_paper')             # Options for discriminator network.
 #D           = EasyDict(func='networks.D_can')             # Options for discriminator network.
 G_opt       = EasyDict(beta1=0.0, beta2=0.99, epsilon=1e-8) # Options for generator optimizer.
